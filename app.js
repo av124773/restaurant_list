@@ -18,7 +18,8 @@ app.use(express.static('public'))
 
 // route setting
 app.get('/', (req, res) => {
-  res.render('index')
+  const restaurant = restaurantList.results
+  res.render('index', { restaurant: restaurant })
 })
 
 // start and listen on the Express server
