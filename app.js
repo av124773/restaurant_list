@@ -18,8 +18,26 @@ app.use(express.static('public'))
 
 // route setting
 app.get('/', (req, res) => {
-  const restaurant = restaurantList.results
-  res.render('index', { restaurant: restaurant })
+  res.render('index', { restaurant: restaurantList.results })
+})
+
+app.get('/restaurants/:restaurant_id', (req, res) => {
+  const restaurant_id = req.params.restaurant_id
+  const restaurant = restaurantList.results.find((item) => {
+    return item.id.toString() === restaurant_id
+  })
+  res.render('show', { restaurant: restaurant })
+})
+
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  const search = restaurantList.results.filter((item) => {
+    return item.name.includes(keyword) || 
+           item.name_en.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()) ||
+           item.category.includes(keyword)
+  })
+  console.log(search)
+  res.render('index', { restaurant: search, keyword: keyword })
 })
 
 // start and listen on the Express server
