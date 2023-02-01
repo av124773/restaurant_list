@@ -6,6 +6,9 @@ const port = 3001
 // require express-handlebars here
 const exphbs = require('express-handlebars')
 
+// require local .json here
+const restaurantList = require('./restaurant.json')
+
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
