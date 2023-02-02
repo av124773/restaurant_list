@@ -36,7 +36,6 @@ app.get('/search', (req, res) => {
            item.name_en.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()) ||
            item.category.includes(keyword)
   })
-  console.log(search)
   res.render('index', { restaurant: search, keyword: keyword })
 })
 
