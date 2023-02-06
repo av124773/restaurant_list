@@ -44,7 +44,7 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
 })
 
 /**
- * route setting: 路徑指向搜尋時的設定 
+ * route setting: 路徑指向搜尋時的設定，如果搜尋不到結果，會將畫面導至 search 頁面
  * 
  * @param {object} req - 主機收到的 request
  * @param {object} res - 主機想回傳的 response
@@ -54,11 +54,15 @@ app.get('/restaurants/:restaurant_id', (req, res) => {
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   const search = restaurantList.results.filter((item) => {
-    return item.name.includes(keyword) || 
+    return item.name.includes(keyword) ||
            item.name_en.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()) ||
            item.category.includes(keyword)
   })
-  res.render('index', { restaurant: search, keyword: keyword })
+  if (search.length === 0) {
+    res.render('nofound')
+  } else {
+    res.render('index', { restaurant: search, keyword: keyword })
+  }
 })
 
 // start and listen on the Express server
